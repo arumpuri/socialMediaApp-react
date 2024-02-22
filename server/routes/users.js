@@ -1,9 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+import userCtrl from '../controllers/users'
+
+const router = express.Router()
+
+router.route('/api/users')
+  .get(userCtrl.list)
+  .post(userCtrl.create)
+
+router.route('/api/users/:userId')
+  .get(userCtrl.read)
+  .put(userCtrl.update)
+  .delete(userCtrl.remove)
+
+router.param('userId', userCtrl.userByID)
+
 
 module.exports = router;
